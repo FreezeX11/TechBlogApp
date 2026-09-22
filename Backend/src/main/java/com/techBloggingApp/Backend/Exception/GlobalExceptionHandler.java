@@ -26,6 +26,18 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(RefreshTokenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiErrorResponse handleRefreshTokenException(RefreshTokenException e, HttpServletRequest request) {
+        return new ApiErrorResponse(
+                "FORBIDDEN",
+                403,
+                e.getMessage(),
+                request.getRequestURI(),
+                Instant.now()
+        );
+    }
+
     @ExceptionHandler(BusinessException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrorResponse handleBusinessRuleException(BusinessException ex, HttpServletRequest req) {
